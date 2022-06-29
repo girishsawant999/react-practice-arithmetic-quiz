@@ -4,26 +4,36 @@ import TestInformation from '../../commonComponents/TestInformation';
 
 type TProps = {
   windowNo: number;
-  questionsCount: number;
   currentQueNo: number;
   timeLeft: number;
   answerInputRef: React.RefObject<HTMLInputElement>;
   currentQueObj: TQuestionObj;
   onSubmitAnswer: () => void;
+  onStartNewTest: () => void;
 };
 
 const QuestionWindow = ({
   windowNo,
-  questionsCount,
   currentQueNo,
   timeLeft,
   answerInputRef,
   currentQueObj,
-  onSubmitAnswer
+  onSubmitAnswer,
+  onStartNewTest
 }: TProps) => {
   return (
     <div className="flex flex-col p-4 w-full  border border-white h-full">
-      <TestInformation showSmall windowNo={windowNo} questionsCount={questionsCount || 0} />
+      <div className="flex w-full justify-between">
+        <TestInformation windowNo={windowNo} showSmall />
+        <div className="h-24">
+          <button
+            onClick={onStartNewTest}
+            className="text-white px-4 py-2 border-white border rounded-md hover:bg-white hover:text-black hover:scale-95 transition-colors"
+          >
+            Reset test
+          </button>
+        </div>
+      </div>
 
       <hr className="bg-white text-center my-5 w-full" />
 

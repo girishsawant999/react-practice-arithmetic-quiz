@@ -31,13 +31,21 @@ const actionHandler = {
         }
       }
     };
+  },
+  [types.UPDATE_HIGHEST_SCORE]: (state: any, action: any) => {
+    return {
+      ...state,
+      highestScore: action.payload
+    };
   }
 };
 
 export type RootState = {
   testConfigData: null | { operandsRange: number; questionsCount: number };
+  highestScore: number;
 };
 
 export default handleActions(actionHandler, {
-  testConfigData: null
+  testConfigData: null,
+  highestScore: 0
 });

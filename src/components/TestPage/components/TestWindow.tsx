@@ -143,6 +143,7 @@ const TestWindow = ({ windowNo }: TProps) => {
 
   const onStartNewTest = () => {
     dispatch(updateTestStateForWindow({ windowNo, clearWindow: true }));
+    setTimeLeft(TIME_PER_QUESTION);
     setCurrentQueNo(0);
     setCurrentQueObj(createQuestionObj());
     setTestStarted(true);
@@ -160,7 +161,7 @@ const TestWindow = ({ windowNo }: TProps) => {
         <TestIntroWindow
           onResumeTest={onResumeTest}
           onStartTest={onStartTest}
-          questionsCount={questionsCount || 0}
+          onResetTest={onStartNewTest}
           showResumeTest={showResumeTest}
           windowNo={windowNo}
         />
@@ -176,7 +177,6 @@ const TestWindow = ({ windowNo }: TProps) => {
       >
         <ResultWindow
           windowNo={windowNo}
-          questionsCount={questionsCount || 0}
           onStartNewTest={onStartNewTest}
           windowTestData={windowTestData}
         />
@@ -190,7 +190,7 @@ const TestWindow = ({ windowNo }: TProps) => {
           onSubmitAnswer={onSubmitAnswer}
           currentQueNo={currentQueNo}
           timeLeft={timeLeft}
-          questionsCount={questionsCount || 0}
+          onStartNewTest={onStartNewTest}
         />
       </When>
     </>

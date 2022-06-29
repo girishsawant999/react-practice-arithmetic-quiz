@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateHighestScore } from '../../../redux/actions';
+import { RootState } from '../../../redux/reducer';
 import { TQuestionObj } from '../../../types';
 
 type TProps = {
   windowNo: number;
-  questionsCount: number;
   onStartNewTest: () => void;
   windowTestData: {
     currentQuestionNo: number;
@@ -11,12 +13,21 @@ type TProps = {
   };
 };
 
-const ResultWindow = ({ windowNo, questionsCount, onStartNewTest, windowTestData }: TProps) => {
+const ResultWindow = ({ windowNo, onStartNewTest, windowTestData }: TProps) => {
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+
+  const { testConfigData, highestScore } = state as RootState;
+  const { questionsCount } = testConfigData || {};
+
   const getTotalCorrectAnswered = () => {
     if (windowTestData && windowTestData.questions) {
       const correctAnswers = Object.values(windowTestData.questions).filter(
         (que: TQuestionObj) => que.isCorrect
       );
+      if (correctAnswers.length > highestScore) {
+        dispatch(updateHighestScore(correctAnswers.length));
+      }
       return correctAnswers.length;
     }
   };
@@ -27,6 +38,7 @@ const ResultWindow = ({ windowNo, questionsCount, onStartNewTest, windowTestData
         <h1 className="text-white text-4xl mb-1">Test Window - {windowNo} Results</h1>
         <p className="text-white">Total Questions - {questionsCount}</p>
         <p className="text-white">Correctly Answered - {getTotalCorrectAnswered()}</p>
+        <p className="text-white">Highest Correctly Answered - {highestScore}</p>
         <button
           onClick={onStartNewTest}
           className="text-white px-4 py-2 mt-2 border-white border rounded-md hover:bg-white hover:text-black hover:scale-95 transition-colors"
