@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateHighestScore } from '../../../redux/actions';
 import { RootState } from '../../../redux/reducer';
@@ -53,7 +53,7 @@ const ResultWindow = ({ windowNo, onStartNewTest, windowTestData }: TProps) => {
           <div className="max-h-[400px] overflow-auto">
             {windowTestData &&
               windowTestData.questions &&
-              Object.values(windowTestData.questions).map((que: any, index: number) => {
+              Object.values(windowTestData.questions).map((que: TQuestionObj, index: number) => {
                 return (
                   <div key={index} className="flex flex-col">
                     <p className={`${que.isCorrect ? 'text-green-700' : 'text-red-700'}`}>
