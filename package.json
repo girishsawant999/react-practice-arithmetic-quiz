@@ -28,7 +28,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:page": "parcel build public/index.html --dist-dir docs --no-source-maps --public-url ."
   },
   "eslintConfig": {
     "extends": [
@@ -49,6 +50,9 @@
     ]
   },
   "devDependencies": {
+    "@parcel/packager-raw-url": "^2.6.2",
+    "@parcel/transformer-sass": "^2.6.2",
+    "@parcel/transformer-webmanifest": "^2.6.2",
     "@types/redux-actions": "^2.6.2",
     "@types/redux-logger": "^3.0.9",
     "@typescript-eslint/eslint-plugin": "^5.30.0",
@@ -56,6 +60,7 @@
     "autoprefixer": "^10.4.7",
     "eslint": "^8.18.0",
     "eslint-plugin-react": "^7.30.1",
+    "parcel": "^2.6.2",
     "postcss": "^8.4.14",
     "sass": "^1.53.0",
     "tailwindcss": "^3.1.4"
