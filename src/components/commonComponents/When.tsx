@@ -2,7 +2,7 @@ import React from 'react';
 
 type TProps = {
   children: React.ReactNode;
-  condition: boolean | undefined | null;
+  condition: boolean | undefined | null | number | string;
 };
 
 const When = ({ children, condition }: TProps) => {

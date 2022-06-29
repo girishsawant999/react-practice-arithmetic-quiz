@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setTestConfigData } from '../../redux/actions';
+import { setTestConfigData, updateTestStateForWindow } from '../../redux/actions';
 
 const HomePage = () => {
   const [testConfig, setTestConfig] = useState({
@@ -21,6 +21,18 @@ const HomePage = () => {
 
   const onStartTest = () => {
     if (Object.values(testConfig).some((value) => !value)) return;
+    dispatch(
+      updateTestStateForWindow({
+        windowNo: 1,
+        clearWindow: true
+      })
+    );
+    dispatch(
+      updateTestStateForWindow({
+        windowNo: 2,
+        clearWindow: true
+      })
+    );
     dispatch(setTestConfigData(testConfig));
     navigate('/test');
   };

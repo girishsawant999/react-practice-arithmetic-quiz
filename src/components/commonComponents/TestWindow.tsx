@@ -16,6 +16,7 @@ const TestWindow = ({ windowNo }: TProps) => {
   const [testStarted, setTestStarted] = useState(false);
   const [currentQueNo, setCurrentQueNo] = useState(0);
   const [timeLeft, setTimeLeft] = useState(TIME_PER_QUESTION);
+  const [showResumeTest, setShowResumeTest] = useState(false);
 
   const answerInputRef = React.createRef<HTMLInputElement>();
 
@@ -35,14 +36,16 @@ const TestWindow = ({ windowNo }: TProps) => {
     }
   }, [timeLeft]);
 
+  useEffect(() => {
+    setTimeLeft(TIME_PER_QUESTION);
+  }, [currentQueNo]);
+
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
 
   const { testConfigData } = state as RootState;
   const windowTestData = (state as any)[`testWindow-${windowNo}`];
   const { questionsCount, operandsRange } = testConfigData || {};
-
-  console.log('windowTestData', windowTestData);
 
   const getRandomInt = (max: number, min = 1) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -109,7 +112,6 @@ const TestWindow = ({ windowNo }: TProps) => {
     }
     if (questionsCount && currentQueNo >= questionsCount - 1) {
       setTestStarted(false);
-      setCurrentQueNo(0);
     }
   };
 
@@ -122,27 +124,81 @@ const TestWindow = ({ windowNo }: TProps) => {
     }
   };
 
+  useEffect(() => {
+    if (
+      currentQueNo === 0 &&
+      windowTestData &&
+      windowTestData.currentQuestionNo &&
+      questionsCount &&
+      windowTestData.currentQuestionNo < questionsCount
+    ) {
+      setShowResumeTest(true);
+    }
+  }, [currentQueNo, windowTestData, questionsCount]);
+
+  const onResumeTest = () => {
+    setCurrentQueNo(windowTestData.currentQuestionNo);
+    setShowResumeTest(false);
+    setTestStarted(true);
+  };
+
+  const onStartTest = () => {
+    setCurrentQueNo(0);
+    setCurrentQueObj(createQuestionObj());
+    setTestStarted(true);
+  };
+
+  const onStartNewTest = () => {
+    dispatch(updateTestStateForWindow({ windowNo, clearWindow: true }));
+    setCurrentQueNo(0);
+    setCurrentQueObj(createQuestionObj());
+    setTestStarted(true);
+  };
+
   return (
     <>
-      <When condition={!testStarted && !windowTestData}>
+      <When
+        condition={
+          !testStarted &&
+          questionsCount &&
+          (!windowTestData || windowTestData.currentQuestionNo < questionsCount)
+        }
+      >
         <div className="flex flex-col justify-center items-center w-full  border border-white h-full">
           <TestInformation windowNo={windowNo} questionsCount={questionsCount || 0} />
-          <button
-            onClick={() => setTestStarted(true)}
-            className="text-white px-4 py-2 border-white border rounded-md hover:bg-white hover:text-black hover:scale-95 transition-colors"
-          >
-            Start test
-          </button>
+          <When condition={!showResumeTest}>
+            <button
+              onClick={onStartTest}
+              className="text-white px-4 py-2 border-white border rounded-md hover:bg-white hover:text-black hover:scale-95 transition-colors"
+            >
+              Start test
+            </button>
+          </When>
+          <When condition={showResumeTest}>
+            <button
+              onClick={onResumeTest}
+              className="text-white px-4 py-2 border-white border rounded-md hover:bg-white hover:text-black hover:scale-95 transition-colors"
+            >
+              Resume test
+            </button>
+          </When>
         </div>
       </When>
-      <When condition={!testStarted && windowTestData}>
+      <When
+        condition={
+          !testStarted &&
+          windowTestData &&
+          questionsCount &&
+          windowTestData.currentQuestionNo >= questionsCount
+        }
+      >
         <div className="flex flex-col justify-center items-center w-full  border border-white h-full">
           <div className="test-window-info flex flex-col justify-center items-center p-2">
             <h1 className="text-white text-4xl mb-1">Test Window - {windowNo} Results</h1>
             <p className="text-white">Total Questions - {questionsCount}</p>
             <p className="text-white">Correctly Answered - {getTotalCorrectAnswered()}</p>
             <button
-              onClick={() => setTestStarted(true)}
+              onClick={onStartNewTest}
               className="text-white px-4 py-2 mt-2 border-white border rounded-md hover:bg-white hover:text-black hover:scale-95 transition-colors"
             >
               Start new test
@@ -160,7 +216,7 @@ const TestWindow = ({ windowNo }: TProps) => {
                       <div key={index} className="flex flex-col">
                         <p className={`${que.isCorrect ? 'text-green-700' : 'text-red-700'}`}>
                           Q{index + 1}. {que.operand1} {que.operator} {que.operand2} =&nbsp;
-                          {que.enteredAnswer || '-'}
+                          {que.enteredAnswer === undefined ? '-' : que.enteredAnswer}
                         </p>
                       </div>
                     );
@@ -188,7 +244,7 @@ const TestWindow = ({ windowNo }: TProps) => {
               <input
                 ref={answerInputRef}
                 className="mb-4 p-2 focus:outline-none rounded-md text-center"
-                type="text"
+                type="number"
                 name="answer"
                 id="answer"
                 autoComplete="off"

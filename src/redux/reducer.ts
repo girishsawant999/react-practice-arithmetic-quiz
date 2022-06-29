@@ -9,12 +9,19 @@ const actionHandler = {
     };
   },
   [types.UPDATE_TEST_STATE_FOR_WINDOW]: (state: any, action: any) => {
-    const { windowNo, currentQuestionObject, currentQueNo } = action.payload;
+    const { windowNo, currentQuestionObject, currentQueNo, clearWindow } = action.payload;
+    if (clearWindow) {
+      const tempState = state;
+      delete tempState[`testWindow-${windowNo}`];
+      return {
+        ...tempState
+      };
+    }
     return {
       ...state,
       [`testWindow-${windowNo}`]: {
         ...state[`testWindow-${windowNo}`],
-        currentQuestionNo: currentQueNo,
+        currentQuestionNo: currentQueNo + 1,
         questions: {
           ...state[`testWindow-${windowNo}`]?.questions,
           [currentQueNo]: {
