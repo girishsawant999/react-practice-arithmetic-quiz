@@ -50,7 +50,7 @@ const TestWindow = ({ windowNo }: TProps) => {
 
   const getRandomOperator = () => {
     const operators = ['+', '-', '*', '/'];
-    return operators[getRandomInt(operators.length)];
+    return operators[getRandomInt(operators.length - 1)];
   };
 
   const calculateAnswer = (operator: string, operand1: number, operand2: number) => {
