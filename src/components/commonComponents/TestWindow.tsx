@@ -10,7 +10,7 @@ type TProps = {
   windowNo: number;
 };
 
-const TIME_PER_QUESTION = 5;
+const TIME_PER_QUESTION = 20;
 
 const TestWindow = ({ windowNo }: TProps) => {
   const [testStarted, setTestStarted] = useState(false);
