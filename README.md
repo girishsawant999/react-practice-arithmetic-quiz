@@ -1,46 +1,131 @@
-# Getting Started with Create React App
+<p align="center">
+  <a href="#" rel="noopener">
+ <img height=200px src="./.github/readme/intro.png" alt="Project logo"></a>
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h2 align="center">React Package Template</h2>
 
-## Available Scripts
+<div align="center">
 
-In the project directory, you can run:
+[![Status](https://img.shields.io/badge/status-active-success.svg)](#)
+[![GitHub Issues](https://img.shields.io/github/issues/girishsawant999/react-typescript-package-template.svg)](https://github.com/girishsawant999/react-typescript-package-template/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/girishsawant999/react-typescript-package-template.svg)](https://github.com/girishsawant999/react-typescript-package-template/pulls)
 
-### `npm start`
+[![Build ](https://img.shields.io/github/workflow/status/girishsawant999/react-typescript-package-template/CI/main)](https://github.com/girishsawant999/react-typescript-package-template/actions)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+</div>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+---
 
-### `npm test`
+<p align="center"> A template code repo for creating typescript based react component or typescript based modules to publish over <a href="https://www.npmjs.com" rel="noopener">npm</a>. Just follow few steps and you can start publishing your code on npm.
+    <br> 
+</p>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 📝 Table of Contents
 
-### `npm run build`
+- [About](#about)
+- [Getting Started](#getting_started)
+- [Publish](#publish)
+- [Built Using](#built_using)
+- [Contributing](./.github/CONTRIBUTING.md)
+- [Authors](#authors)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🧐 About <a name = "about"></a>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+A template code for creating typescript based react component or modules. Bundled with configuration for jest, eslint, prettier, and husky pre-commit hook.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🏁 Getting Started <a name = "getting_started"></a>
 
-### `npm run eject`
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [publish](#publish) notes on how to publish the package on npm.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Prerequisites
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+As you already know about JS, you better know the prerequisites, Node JS and NPM.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Setup & Installation
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Let's start with the following steps.
 
-## Learn More
+- Now <a href="https://github.com/girishsawant999/react-typescript-package-template/generate">click here</a> to use this template to create a new repo for package.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Once repo is created clone it into your local machine.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Now run the following code in project directory to install dependencies.
+
+  ```
+    npm run setup
+  ```
+
+- Thats all you are ready to create new typescript based react component package or TS module. Just update the **_*src/index.tsx*_**.
+
+### Build Package
+
+Follow to step to create a build.
+
+- Once you updated the **_src/index.tsx_** and created react component or typescript module.
+
+- Then the following command in projet directory.
+
+  ```
+    npm run build
+  ```
+
+- Once the command output is completed you will get a **_dist_** folder with index.js and index.d.ts files.
+
+- Thats all you are ready to publish your package on npm.
+
+### Testing
+
+can test your package in the following way.
+
+- You can import your component from dist folder in your **_*demo/index.tsx*_** file.
+
+- Then in **_*demo/index.tsx*_** you can pass specific props for the component. Now run following command in **_demo_** directory
+
+  ```
+    npm run start
+  ```
+
+## 🔧 Running the tests <a name = "tests"></a>
+
+Following step are used to run test cases created for component or module.
+
+- As Jest framework is installed in your package.json. So add test files in **\_\_\_test\_\_\_** folder.
+
+- Then run command to execute test cases.
+  ```
+    npm run test
+  ```
+
+## 🚀 Publish to npm<a name = "publish"></a>
+
+You have tested your package and ready to publish to NPM. Follow the steps.
+
+- Once the build is created successfully & tested.
+
+- Update package.json file with your package name and version and other details.
+
+- Now run the following command in project directory to login with your npm account.
+  ```
+    npm run login
+  ```
+- Now run the following command to publish your package on npm.
+
+  ```
+    npm run publish
+  ```
+
+## ⛏️ Built Using <a name = "built_using"></a>
+
+- [React](https://reactjs.org)
+- [Parcel](https://parceljs.org)
+- [Typescript](https://www.typescriptlang.org)
+- [Javascript](https://developer.mozilla.org/en-US/)
+- [Jest](https://jestjs.io)
+
+## ✍️ Authors <a name = "authors"></a>
+
+- [@girishsawant999](https://girishsawant999.github.io) - Idea & Initial work
+
+See also the list of [contributors](https://github.com/girishsawant999/react-typescript-package-template/contributors) who participated in this project.
